@@ -1,10 +1,17 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
+from .models import Host
+from .forms import HostForm
 # Create your views here.
 def index(request):
-    return HttpResponse("Hello, world.")
+    host_list = Host.objects.all()
+    return render(request, "main.html",{"host_list":host_list})
 
-def cmdb(request):
-    return HttpResponse("this cmdb")
-
-def asset(request,asset_id):
-    return HttpResponse(f"this asset {asset_id}")
+def add(request):
+    if request.method == 'POST':
+        form = HostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = HostForm()
+    return render(request, 'add.html', {'form': form})
