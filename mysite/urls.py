@@ -3,6 +3,5 @@ from django.urls import path,include
 from cmdb import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('cmdb.urls')),
-    path('cmdb/',include('cmdb.urls')),
+    path('',include('cmdb.urls'))
 ]
